@@ -3,7 +3,7 @@ Rook Jumping Maze
 
 Simple BFS implementation to solve the rook jumping maze problem.
 
-Usage: Input n m dimensions of the matrix, followed by coordinates of the starting position and the goal position. Then input the data of the matrix. 0 marks the end of input.
+Usage: Input n m dimensions of the matrix, followed by coordinates of the starting position and the goal position. Then input the data of the matrix. 0 marks the end of input. You can also use one of the predefined inputs available in the folder (./a.out < input.txt)
 
 Input example: 
 
