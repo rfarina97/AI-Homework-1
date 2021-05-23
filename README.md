@@ -19,6 +19,6 @@ Input example:
 
 0
   
-Output: Number of steps taken for shortest path to goal on each subproblem. "No hay solucion" means that no solution to the goal could be found.
+Output: Number of steps taken to reach to goal on each subproblem (shortest path). "No hay solucion" means that no solution to the goal could be found.
 
 3
