@@ -36,14 +36,17 @@ int BFS(int* mat, int row, int col, int sX, int sY, int eX, int eY){
 	//label root as discovered
 	visited[sX][sY] = true;
 
-	int cost[row][col];
+	pair<int,int> parent[row][col];
+	parent[0][0] = make_pair(0,0);
 	for (int i = 0; i < row; ++i)
 	{
 		for (int j = 0; j < col; ++j)
 		{
-			cost[i][j] = INT_MAX;
+			parent[i][j] = make_pair(-1,-1);
 		}
 	}
+
+
 
 	//add root to queue
 	pair<int,int> root(sX, sY);
@@ -66,8 +69,23 @@ int BFS(int* mat, int row, int col, int sX, int sY, int eX, int eY){
 		//check if aux is goal
 		if (aux.first == eX && aux.second == eY){
 			cout << "GOAL REACHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
-			cout << steps << endl;
-			return steps;
+			cout << "Steps: " << steps << endl;
+			for (int i = 0; i < row; ++i)
+			{
+				for (int j = 0; j < col; ++j)
+				{
+					if (parent[i][j].first != -1){
+						cout << parent[i][j].first << " " << parent[i][j].second << " | ";
+					}
+					else{
+						cout << "- - | ";
+					}
+					
+				}
+				cout << endl;
+			}
+			break;
+			//return steps;
 		}
 
 		checkVal = mat[aux.first * col + aux.second]; //current value to be checked
@@ -78,6 +96,7 @@ int BFS(int* mat, int row, int col, int sX, int sY, int eX, int eY){
 		posDown = aux.first + checkVal;
 		posLeft = aux.second - checkVal;
 		posRight = aux.second + checkVal;
+		cout << "I: " << aux.first << " " << aux.second << endl;
 		cout << "Up: " << posUp << " " << aux.second << endl;
 		cout << "Down: " << posDown << " " << aux.second << endl;
 		cout << "Left: " << aux.first << " " << posLeft << endl;
@@ -88,58 +107,77 @@ int BFS(int* mat, int row, int col, int sX, int sY, int eX, int eY){
 		//check if any of the 4 positions has been discovered
 		//and add them to queue if not discovered and accesible
 		//this implementation is pretty rubbish but it works
-		if (posUp >= 0 && posUp < row){
+		if ((posUp >= 0) && (posUp < row)){
 			if (visited[posUp][aux.second] == false){
 				res = make_pair(posUp, aux.second);
 				pending.push(res);
-				cout << "Pushing Up: " << posUp << " " << aux.second << endl;
-				visited[posUp][aux.second] = true;
+				cerr << "Pushing Up: " << posUp << " " << aux.second << endl;
+				visited[aux.first][aux.second] = true;
+
+				cerr << "Attempting to put pair in " << posUp << " " << aux.second << endl;
+				parent[posUp][aux.second] = make_pair(aux.first, aux.second);
 			}
 		}
-		if (posDown >= 0 && posDown < row){
+		if ((posDown >= 0) && (posDown < row)){
 			if (visited[posDown][aux.second] == false){
 				res = make_pair(posDown, aux.second);
 				pending.push(res);
-				cout << "Pushing Down: " << posDown << " " << aux.second << endl;
-				visited[posDown][aux.second] == true;
+				cerr << "Pushing Down: " << posDown << " " << aux.second << endl;
+				visited[aux.first][aux.second] = true;
+
+				cerr << "Attempting to put pair in " << posDown << " " << aux.second << endl;
+				parent[posDown][aux.second] = make_pair(aux.first, aux.second);
 			}			
 		}
-		if (posLeft >= 0 && posLeft < col){
+		if ((posLeft >= 0) && (posLeft < col)){
 			if (visited[aux.first][posLeft] == false){
 				res = make_pair(aux.first, posLeft);
 				pending.push(res);
-				cout << "Pushing Left: " << aux.first << " " << posLeft << endl;
-				visited[aux.first][posLeft] == true;
+				cerr << "Pushing Left: " << aux.first << " " << posLeft << endl;
+				visited[aux.first][aux.second] = true;
+
+				cerr << "Attempting to put pair in " << aux.first << " " << posLeft << endl;
+				parent[aux.first][posLeft] = make_pair(aux.first, aux.second);
 			}			
 		}
-		if (posRight >= 0 && posRight < col){
+		if ((posRight >= 0) && (posRight < col)){
 			if (visited[aux.first][posRight] == false){
 				res = make_pair(aux.first, posRight);
 				pending.push(res);
-				cout << "Pushing Right: " << aux.first << " " << posRight << endl;
-				visited[aux.first][posRight] == true;
+				cerr << "Pushing Right: " << aux.first << " " << posRight << endl;
+				visited[aux.first][aux.second] = true;
+
+				cerr << "Attempting to put pair in " << aux.first << " " << posRight << endl;
+				parent[aux.first][posRight] = make_pair(aux.first, aux.second);
 			}			
 		}
-		
+
+		steps++;
 		cout << "-----------------------\n";
 
 	}
 
-	/*
-		 1  procedure BFS(G, root) is
-		 2      let Q be a queue
-		 3      label root as discovered
-		 4      Q.enqueue(root)
-		 5      while Q is not empty do
-		 6          v := Q.dequeue()
-		 7          if v is the goal then
-		 8              return v
-		 9          for all edges from v to w in G.adjacentEdges(v) do
-		10              if w is not labeled as discovered then
-		11                  label w as discovered
-		12                  Q.enqueue(w)
-	*/
+	pair<int,int> temp = make_pair(eX, eY);
+	cout << eX << " " << eY << endl;
+	vector<pair<int,int>> road;
+	//print path
+	while(1){
+		road.push_back(temp);
+		//cout << "Step " << temp.first << " " << temp.second << endl;
+		int newX = parent[temp.first][temp.second].first;
+		int newY = parent[temp.first][temp.second].second;
+		//cout << newX << " " << newY << endl;
+		temp = make_pair(newX, newY);
+		if (temp.first == -1){
+			break;
+		}
+	}
 
+	cout << "ROAD TAKEN: " << endl;
+	for (int i = road.size()-1 ; i > 0; --i)
+	{
+		cout<<road[i].first << " " << road[i].second << endl;
+	}
 	//mat[5] = 999;
 	return -1;
 }
