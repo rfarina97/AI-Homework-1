@@ -208,13 +208,15 @@ int main()
 		int endX, endY;
 
 		//assume start and end are always within the bounds of the matrix
-		cin >> n >> m;
-		cin >> startX >> startY;
-		cin >> endX >> endY;
-
+		cin >> n;
 		if (n == 0){
 			break;
 		}
+		cin >> m;
+		cin >> startX >> startY;
+		cin >> endX >> endY;
+
+
 		//matrix
 		int mat[n*m];
 
