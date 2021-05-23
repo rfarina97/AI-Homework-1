@@ -7,30 +7,13 @@ Usage: Input n m dimensions of the matrix, followed by coordinates of the starti
 
 Input example: 
 
-  5 5 0 0 1 3
-  
-  3 4 1 3 1
-  
-  3 3 3 0 2
-  
-  3 1 2 2 3
-  
-  4 2 3 3 3
-  
-  4 1 4 3 2
-  
-  5 5 0 0 4 4
-  
-  3 3 2 4 3
-  
-  2 2 2 1 1
-  
-  4 3 1 3 4
-  
-  2 3 1 1 3
-  
-  1 1 3 2 0
-  
-  0
+4 4 0 0 3 3
+2 2 4 2
+3 3 1 2
+3 2 2 1
+4 2 3 0
+0
   
 Output: Number of steps taken for shortest path to goal on each subproblem. "No hay solucion" means that no solution to the goal could be found.
+
+3
