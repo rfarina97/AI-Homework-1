@@ -174,7 +174,7 @@ int BFS(int* mat, int row, int col, int sX, int sY, int eX, int eY){
 	}
 
 	cout << "ROAD TAKEN: " << endl;
-	for (int i = road.size()-1 ; i > 0; --i)
+	for (int i = road.size()-1 ; i >= 0; --i)
 	{
 		cout<<road[i].first << " " << road[i].second << endl;
 	}
